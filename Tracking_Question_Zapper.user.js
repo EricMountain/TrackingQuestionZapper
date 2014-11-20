@@ -11,7 +11,7 @@
 // @include     http*://*.youtube.com/*
 // @include     http*://lemonde.fr/*
 // @include     http*://*.lemonde.fr/*
-// @version     1.3
+// @version     1.4
 // @grant       none
 // ==/UserScript==
 
@@ -57,7 +57,7 @@ function youtube() {
 function lemonde() {
     // Click dispatch method doesn't seem to work
     // return zapQuestion("div#alerte_tracking > span.croix_grise");
-    var element = document.getElementById("#alerte_tracking");
+    var element = document.getElementById("alerte_tracking");
     element.parentNode.removeChild(element);
     return true;
 }
