@@ -11,7 +11,7 @@
 // @include     http*://*.youtube.com/*
 // @include     http*://lemonde.fr/*
 // @include     http*://*.lemonde.fr/*
-// @version     1.1
+// @version     1.2
 // @grant       none
 // ==/UserScript==
 
@@ -55,7 +55,7 @@ function youtube() {
 }
 
 function lemonde() {
-    return zapQuestion("div#alerte_tracking > a:nth-child(1)");
+    return zapQuestion("div#alerte_tracking > span.croix_grise");
 }
 
 var knownSites = [
