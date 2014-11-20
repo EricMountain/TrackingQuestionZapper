@@ -11,7 +11,7 @@
 // @include     http*://*.youtube.com/*
 // @include     http*://lemonde.fr/*
 // @include     http*://*.lemonde.fr/*
-// @version     1
+// @version     1.1
 // @grant       none
 // ==/UserScript==
 
