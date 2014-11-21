@@ -11,6 +11,8 @@
 // @include     http*://*.youtube.com/*
 // @include     http*://lemonde.fr/*
 // @include     http*://*.lemonde.fr/*
+// @include     http*://techradar.com/*
+// @include     http*://*.techradar.com/*
 // @version     1.4
 // @grant       none
 // ==/UserScript==
@@ -62,12 +64,17 @@ function lemonde() {
     return true;
 }
 
+function techradar() {
+    return zapQuestion("#fp_cookieMessageCloseButton");
+}
+
 var knownSites = [
     { r: /^https?:\/\/.*google\..*/, f: google},
     { r: /^https?:\/\/.*google\..*/, f: youtube},
     { r: /^https?:\/\/.*slashdot\..*/, f: slashdot},
     { r: /^https?:\/\/.*youtube\..*/, f: youtube },
-    { r: /^https?:\/\/.*lemonde\.fr/, f: lemonde }
+    { r: /^https?:\/\/.*lemonde\.fr/, f: lemonde },
+    { r: /^https?:\/\/.*techradar\.com/, f: techradar }
 ];
 
 knownSites.every(function(element, index, array) {
