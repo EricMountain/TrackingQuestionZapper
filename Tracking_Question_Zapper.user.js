@@ -13,7 +13,7 @@
 // @include     http*://*.lemonde.fr/*
 // @include     http*://techradar.com/*
 // @include     http*://*.techradar.com/*
-// @version     1.5
+// @version     1.6
 // @grant       none
 // ==/UserScript==
 
@@ -44,6 +44,15 @@ function zapQuestion(selector) {
     }
 }
 
+// Click dispatch method doesn't seem to work on cases where addEvent()
+// was used to register the click handler.  So just forcibly remove the
+// offending block.
+function zapElement(id) {
+    var element = document.getElementById(id);
+    element.parentNode.removeChild(element);
+    return true;
+}
+
 function google() {
     return zapQuestion("#epb-ok");
 }
@@ -57,15 +66,11 @@ function youtube() {
 }
 
 function lemonde() {
-    // Click dispatch method doesn't seem to work
-    // return zapQuestion("div#alerte_tracking > span.croix_grise");
-    var element = document.getElementById("alerte_tracking");
-    element.parentNode.removeChild(element);
-    return true;
+    return zapElement("alerte_tracking");
 }
 
 function techradar() {
-    return zapQuestion("#fp_cookieMessageCloseButton");
+    return zapElement("fp_cookieMessageContainer");
 }
 
 var knownSites = [
