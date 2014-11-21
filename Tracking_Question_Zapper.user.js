@@ -13,7 +13,7 @@
 // @include     http*://*.lemonde.fr/*
 // @include     http*://techradar.com/*
 // @include     http*://*.techradar.com/*
-// @version     1.4
+// @version     1.5
 // @grant       none
 // ==/UserScript==
 
