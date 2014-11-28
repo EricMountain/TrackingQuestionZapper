@@ -13,20 +13,25 @@
 // @include     http*://*.lemonde.fr/*
 // @include     http*://techradar.com/*
 // @include     http*://*.techradar.com/*
-// @version     1.6
+// @include     http*://orange.fr/*
+// @include     http*://*.orange.fr/*
+// @version     1.7
 // @grant       none
 // ==/UserScript==
 
 // From http://stackoverflow.com/questions/2705583/how-to-simulate-a-click-with-javascript
 // Fires the specified event type ('click'...) on the given element.
 function eventFire(el, etype) {
-  if (el.fireEvent) {
-    (el.fireEvent('on' + etype));
-  } else {
-    var evObj = document.createEvent('Events');
-    evObj.initEvent(etype, true, false);
-    el.dispatchEvent(evObj);
-  }
+    console.log('eventFire', el, etype);
+    if (el.fireEvent) {
+        (el.fireEvent('on' + etype));
+        console.log('fireEvent of type ', etype, 'triggered on', el);
+    } else {
+        var evObj = document.createEvent('Events');
+        evObj.initEvent(etype, true, false);
+        el.dispatchEvent(evObj);
+        console.log('dispatched', etype, 'event to', evObj);
+    }
 }
 
 // Gets the specified element from the DOM, and fires a click event on it.
@@ -34,11 +39,13 @@ function eventFire(el, etype) {
 function zapQuestion(selector) {
     var element = document.querySelector(selector);
 
-    if (typeof element === 'undefined') {
-        console.log("No matching element found in document.");
+    console.debug('Search result:', element);
+
+    if (element === null) {
+        console.debug("No matching element found in document:", selector);
         return false;
     } else {
-        console.log("Matching element found in document.");
+        console.debug("Matching element found in document:", selector);
         eventFire(element, 'click');
         return true;
     }
@@ -49,8 +56,17 @@ function zapQuestion(selector) {
 // offending block.
 function zapElement(id) {
     var element = document.getElementById(id);
-    element.parentNode.removeChild(element);
-    return true;
+
+    console.debug('Search result:', element);
+
+    if (element === null) {
+        console.debug("No matching element found in document:", id);
+        return false;
+    } else {
+        console.debug("Matching element found in document:", id);
+        element.parentNode.removeChild(element);
+        return true;
+    }
 }
 
 function google() {
@@ -69,6 +85,10 @@ function lemonde() {
     return zapElement("alerte_tracking");
 }
 
+function orange() {
+    return zapElement("o-cookie");
+}
+
 function techradar() {
     return zapElement("fp_cookieMessageContainer");
 }
@@ -79,6 +99,7 @@ var knownSites = [
     { r: /^https?:\/\/.*slashdot\..*/, f: slashdot},
     { r: /^https?:\/\/.*youtube\..*/, f: youtube },
     { r: /^https?:\/\/.*lemonde\.fr/, f: lemonde },
+    { r: /^https?:\/\/.*orange\.fr/, f: orange },
     { r: /^https?:\/\/.*techradar\.com/, f: techradar }
 ];
 
