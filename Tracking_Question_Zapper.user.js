@@ -13,9 +13,11 @@
 // @include     http*://*.lemonde.fr/*
 // @include     http*://techradar.com/*
 // @include     http*://*.techradar.com/*
+// @include     http*://sourceforge.net/*
+// @include     http*://*.sourceforge.net/*
 // @include     http*://orange.fr/*
 // @include     http*://*.orange.fr/*
-// @version     1.7
+// @version     1.8
 // @grant       none
 // ==/UserScript==
 
@@ -86,7 +88,7 @@ function lemonde() {
 }
 
 function orange() {
-    return zapElement("o-cookie");
+    return zapQuestion("o-cookie");
 }
 
 function techradar() {
@@ -97,25 +99,28 @@ var knownSites = [
     { r: /^https?:\/\/.*google\..*/, f: google},
     { r: /^https?:\/\/.*google\..*/, f: youtube},
     { r: /^https?:\/\/.*slashdot\..*/, f: slashdot},
+    { r: /^https?:\/\/.*sourceforge\..*/, f: slashdot},
     { r: /^https?:\/\/.*youtube\..*/, f: youtube },
     { r: /^https?:\/\/.*lemonde\.fr/, f: lemonde },
     { r: /^https?:\/\/.*orange\.fr/, f: orange },
     { r: /^https?:\/\/.*techradar\.com/, f: techradar }
 ];
 
-knownSites.every(function(element, index, array) {
-    console.log('Test:', location.href, element, index);
-    if (element.r.test(location.href)) {
-        console.log('URL matched rule.');
+setTimeout(function () {
+    knownSites.every(function(element, index, array) {
+        console.log('Test:', location.href, element, index);
+        if (element.r.test(location.href)) {
+            console.log('URL matched rule.');
 
-        // Some sites (e.g. Youtube using Google accounts) match one
-        // URL, but need the question handling of another site.  So we
-        // don't stop trying to match unless the selector itself matches
-        // an element of the document.
+            // Some sites (e.g. Youtube using Google accounts) match one
+            // URL, but need the question handling of another site.  So we
+            // don't stop trying to match unless the selector itself matches
+            // an element of the document.
 
-        return !element.f();
-    } else {
-        console.log('URL didn\'t match rule.');
-        return true;
-    }
-});
+            return !element.f();
+        } else {
+            console.log('URL didn\'t match rule.');
+            return true;
+        }
+    });
+}, 50);
